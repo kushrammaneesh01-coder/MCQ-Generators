@@ -6,6 +6,8 @@ Author-email: kushrammaneesh01@gmail.com
 License-File: LICENSE
 Requires-Dist: openai
 Requires-Dist: langchain
+Requires-Dist: langchain-openai
+Requires-Dist: langchain-community
 Requires-Dist: streamlit
 Requires-Dist: python-dotenv
 Requires-Dist: PyPDF2

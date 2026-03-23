@@ -3,11 +3,9 @@ import json
 import traceback
 import pandas as pd
 from dotenv import load_dotenv
-from mcqgenrator.utils import read_file,get_table_data
-from mcqgenrator.logger import logging
 
 #imporing necessary packages packages from langchain
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.chains import SequentialChain
@@ -20,7 +18,7 @@ key = os.getenv("OPENAI_API_KEY")
 
 print("Value of MY_VARIABLE:", key)
 
-llm = ChatOpenAI(OPENAI_API_KEY=key,model_name="gpt-3.5-turbo", temperature=0.3)
+llm = ChatOpenAI(openai_api_key=key, model_name="gpt-3.5-turbo", temperature=0.3)
 
 template="""
 Text:{text}
@@ -35,26 +33,26 @@ Ensure to make {number} MCQs
 """
 
 quiz_generation_prompt = PromptTemplate(
-    input_variables=["text", "number", "grade", "tone", "response_json"],
+    input_variables=["text", "number", "subject", "tone", "response_json"],
     template=template)
 
 
 
 quiz_chain=LLMChain(llm=llm, prompt=quiz_generation_prompt, output_key="quiz", verbose=True)
 
-template="""
+template2="""
 You are an expert english grammarian and writer. Given a Multiple Choice Quiz for {subject} students.\
-You need to evaluate the complexity of teh question and give a complete analysis of the quiz if the students
-will be able to unserstand the questions and answer them. Only use at max 50 words for complexity analysis. 
+You need to evaluate the complexity of the question and give a complete analysis of the quiz if the students
+will be able to understand the questions and answer them. Only use at max 50 words for complexity analysis. 
 if the quiz is not at par with the cognitive and analytical abilities of the students,\
-update tech quiz questions which needs to be changed  and change the tone such that it perfectly fits the student abilities
+update the quiz questions which needs to be changed and change the tone such that it perfectly fits the student abilities
 Quiz_MCQs:
 {quiz}
 
 Check from an expert English Writer of the above quiz:
 """
 
-quiz_evaluation_prompt=PromptTemplate(input_variables=["subject", "quiz"], template=template)
+quiz_evaluation_prompt=PromptTemplate(input_variables=["subject", "quiz"], template=template2)
 
 review_chain=LLMChain(llm=llm, prompt=quiz_evaluation_prompt, output_key="review", verbose=True)
 
