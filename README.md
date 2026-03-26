@@ -61,7 +61,7 @@ Make sure you have the following installed before starting:
 
 If using Git:
 ```bash
-git clone https://github.com/your-username/MCQ-Generators.git
+git clone https://github.com/kushrammaneesh01-coder/MCQ-Generators
 cd MCQ-Generators
 ```
 
@@ -101,6 +101,19 @@ This installs all required packages including:
 - `streamlit`, `python-dotenv`, `PyPDF2`, `pandas`
 
 > The `-e .` line in `requirements.txt` also installs the local `mcqgenerator` package (from `src/`) in editable mode.
+
+> Use the following command to install the local `mcqgenerator` package from the `src/` directory in editable mode:
+
+```
+pip install -e ./src
+```
+
+
+>🔍 Verify installation
+
+After installing:
+
+```pip list | grep mcqgenerator ```
 
 ---
 
